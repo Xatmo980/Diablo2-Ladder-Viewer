@@ -1,4 +1,7 @@
 <?php
+if (!defined('SECURE_ACCESS')) {
+    die('Direct access not permitted');
+}
 
 $xmlfile = "path/var/ladders/d2ladder.xml";
 $accountsdir = "Path/var/charinfo";
