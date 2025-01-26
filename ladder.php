@@ -52,7 +52,9 @@ foreach ($xml->ladder as $ladder) {
 		   $status = $char->status;
 		   $acc = $accounts[strtolower($name)];
                                  
-					
+		  if($prefix = " ") {
+                        $prefix = "None";
+                  }	
 		  if($status == "alive") {
 		        $status = "<font color=\"green\">alive</font>";
 			$anzahl_lebende++;
