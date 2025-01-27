@@ -6,7 +6,7 @@ if (!defined('SECURE_ACCESS')) {
 //          Options
 $ladderType = "Expansion"; // Possible Types: Standard, Hardcore, Expansion, Expansion HC
 $GatewayADD = "URL";
-$RegFileLink = "https://URL/Network.reg";
+$RegFileLink = "URL";
 //
 /////////////////////////////////////////////////
 //          FilePaths
@@ -44,13 +44,13 @@ while(($file = readdir($handle)) != false) {
 $anzahl_tote = $anzahl_lebende = 0;
 
 $xml = simplexml_load_file($xmlfile);
-print "<center><table cellpadding=\"2\" cellspacing=\"2\" style=\"width:70%;border:1px solid black;border-radius:10px;background-color:#2C2F33\"";
+print "<center style=\"padding: 20px;\"><table cellpadding=\"2\" cellspacing=\"2\" style=\"width:70%;border:1px solid black;border-radius:10px;background-color:#2C2F33\"";
 foreach ($xml->ladder as $ladder) {
          if($ladder->mode  == $ladderType) {
             if($ladder->class == "OverAll")  {
 
 	       print " <tr><colspan=\"7\"><font size=\"6\">$ladderType Ladder</font></th></tr>\n";
-	       print " <tr><th>#</th><th>Name</th><th>Level</th><th>Exp</th><th>Class</th><th>Title</th><th>Status</th></tr>\n";
+	       print " <tr><th>#</th><th>Name</th><th>Level</th><th>Exp</th><th>Class</th><th>Title</th><th>Status</th><th>Logged</th></tr>\n";
 
            foreach($ladder->char as $char) {
 		   $rank = $char->rank;
@@ -67,10 +67,10 @@ foreach ($xml->ladder as $ladder) {
                         $prefix = "None";
                   }		
 		  if($status == "alive") {
-		        $status = "<font color=\"green\">alive</font>";
+		        $status = "<font color=\"green\">Alive</font>";
 			$anzahl_lebende++;
 		   } else {
-			$status = "<font color=\"red\">dead</font>";
+			$status = "<font color=\"red\">Dead</font>";
 			$anzahl_tote++;
 		   }
 
@@ -80,10 +80,15 @@ foreach ($xml->ladder as $ladder) {
 		   } else {
 			print "<s>$name</s> (<small>deleted</small>)";
 		   }
-		   print "</td><td>$level</td><td>$exp</td><td>$class</td><td>$prefix</td><td>$status</td></tr>\n";
+                   $online = "<font color=\"red\">Offline</font>";
+                   foreach($xml2->Users->user as $uuser) {
+                           $uname = $uuser->name;
+                           $online = "<font color=\"green\">Online</font>";
+                   }
+		   print "</td><td>$level</td><td>$exp</td><td>$class</td><td>$prefix</td><td>$status</td><td>$online</td></tr>\n";
 	   }
-     }
-  print "</table>\n";
+      print "</table>\n";
+    }
   }
 }
   print "<p>Total of <b>" . ($anzahl_tote + $anzahl_lebende) . "</b> characters in the ladder, <b>$anzahl_lebende</b> alive and <b>$anzahl_tote</b> dead.</p></center>";
