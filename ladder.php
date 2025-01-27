@@ -83,7 +83,9 @@ foreach ($xml->ladder as $ladder) {
                    $online = "<font color=\"red\">Offline</font>";
                    foreach($xml2->Users->user as $uuser) {
                            $uname = $uuser->name;
-                           $online = "<font color=\"green\">Online</font>";
+			   if ($uname = $name) {
+                               $online = "<font color=\"green\">Online</font>";
+                            }
                    }
 		   print "</td><td>$level</td><td>$exp</td><td>$class</td><td>$prefix</td><td>$status</td><td>$online</td></tr>\n";
 	   }
